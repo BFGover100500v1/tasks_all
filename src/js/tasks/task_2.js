@@ -9,28 +9,27 @@ function isSuperset(set, subset) {
 
 function checkMatrix( matrixToCheck, values ) {
     let arrayResult = [];
-    let rowsCount = matrixToCheck.length;
-    let columnsLength = matrixToCheck[0].length;
-    let setValues = new Set(values);
+    let columnsLength = Number.MAX_SAFE_INTEGER;
 
     for (let i = 0; i < matrixToCheck.length; i++) {
-        let tmpLength = matrixToCheck[i].length;
-        columnsLength = (columnsLength > tmpLength)? tmpLength : columnsLength;
+        columnsLength = (columnsLength > matrixToCheck[i].length)? matrixToCheck[i].length : columnsLength;
     }
 
-    for (let k = 0; k < columnsLength; k++) {
-        if (k === columnsLength - 2) { break; }
-        let setTmp = new Set();
-        for (let j = 0; j < rowsCount; j++) {
-            setTmp.add(matrixToCheck[j][k]);
-            setTmp.add(matrixToCheck[j][k + 1]);
-            setTmp.add(matrixToCheck[j][k + 2]);
+    for (let k = 0; k < columnsLength - 2; k++) {
+        let arrayPart = [];
+        for (let j = 0; j < matrixToCheck.length; j++) {
+            for (let x = 0; x < 3; x++) {
+                arrayPart.push(matrixToCheck[j][k + x]);
+            }
         }
-        let is_true = isSuperset(setTmp, setValues);
-        arrayResult.push(is_true);
+        if (arrayResult[k] === undefined) {
+            arrayResult[k] = arrayPart;
+        }
     }
 
-    return arrayResult;
+    return arrayResult.map(function (array) {
+        return isSuperset(new Set(array), new Set(values));
+    });
 }
 
 let numbers = [1,2,3,4,5,6,7,8,9];
