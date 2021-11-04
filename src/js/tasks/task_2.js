@@ -13,6 +13,11 @@ function checkMatrix( matrixToCheck, values ) {
     let columnsLength = matrixToCheck[0].length;
     let setValues = new Set(values);
 
+    for (let i = 0; i < matrixToCheck.length; i++) {
+        let tmpLength = matrixToCheck[i].length;
+        columnsLength = (columnsLength > tmpLength)? tmpLength : columnsLength;
+    }
+
     for (let k = 0; k < columnsLength; k++) {
         if (k === columnsLength - 2) { break; }
         let setTmp = new Set();
