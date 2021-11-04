@@ -29,13 +29,13 @@ function formatPadding(pad, str, padding) {
 function splitWords( array ) {
     let result = [];
     let spaces = Array(maxStringLength + 1).join(' ');
-    let cutString = Array(maxStringLength+2).fill('*').join('');
+    let cutString = Array(maxStringLength + 2).fill('*').join('');
     result.push(cutString);
 
     for (let k = 0; k < array.length; k++) {
         let str = arrayWords[k].join(' ');
         let matches = str.match(/.{1,16}(?: |$)/g);
-        for (j = 0; j < matches.length; j++) {
+        for (let j = 0; j < matches.length; j++) {
             let string = formatPadding(spaces, matches[j], arrayFormat[k]);
             result.push("*".concat(string, '*'));
         }
